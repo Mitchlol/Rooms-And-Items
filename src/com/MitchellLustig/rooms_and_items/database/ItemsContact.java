@@ -6,11 +6,9 @@ public class ItemsContact {
 
 	public ItemsContact() {}
 	
-	public static abstract class RoomEntry implements BaseColumns {
-		public static final String WORLD_ID = "worldid";
-		public static final String ROOM_X = "roomx";
-		public static final String ROOM_Y = "roomy";
-		public static final String ROOM_NAME = "roomname";
+	public static abstract class ItemEntry implements BaseColumns {
+		public static final String LOCATION = "location";
+		public static final String ITEM_NAME = "itemname";
 	}
 
 }
