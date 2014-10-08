@@ -32,14 +32,14 @@ public class RoomsDB extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onCreate(SQLiteDatabase arg0) {	
+	public void onCreate(SQLiteDatabase db) {	
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		//db.execSQL("DROP TABLE IF EXISTS " + RoomEntry.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + SCHEMA.Tables.ROOMS);
 	}
 
 }
