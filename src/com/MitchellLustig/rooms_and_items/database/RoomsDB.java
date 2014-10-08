@@ -1,9 +1,7 @@
 package com.MitchellLustig.rooms_and_items.database;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
@@ -24,14 +22,8 @@ public class RoomsDB extends SQLiteOpenHelper {
 		}
 	}
 
-	public RoomsDB(Context context, String name, CursorFactory factory, int version) {
-		super(context, name, factory, version);
-		// TODO Auto-generated constructor stub
-	}
-
-	public RoomsDB(Context context, String name, CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
-		super(context, name, factory, version, errorHandler);
-		// TODO Auto-generated constructor stub
+	public RoomsDB(Context context) {
+		super(context, Schema.DATABASE, null, Schema.VERSION);
 	}
 
 	@Override
