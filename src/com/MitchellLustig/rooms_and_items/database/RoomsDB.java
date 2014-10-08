@@ -19,6 +19,11 @@ public class RoomsDB extends SQLiteOpenHelper {
 				public static final String ROOM_Y = "roomy";
 				public static final String ROOM_NAME = "roomname";
 			}
+			public static final String ITEMS = "items";
+			public static final class Items implements BaseColumns{
+				public static final String LOCATION = "location";
+				public static final String ITEM_NAME = "itemname";
+			}
 		}
 	}
 
@@ -35,11 +40,17 @@ public class RoomsDB extends SQLiteOpenHelper {
 			Schema.Tables.Rooms.ROOM_NAME+" INTEGER"+","+
 			Schema.Tables.Rooms.ROOM_NAME+" VARCHAR(64)"+
 			")");
+		db.execSQL("CREATE TABLE "+Schema.Tables.ITEMS+"("+
+				Schema.Tables.Items._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
+				Schema.Tables.Items.LOCATION+" VARCHAR(64)"+","+
+				Schema.Tables.Items.ITEM_NAME+" VARCHAR(64)"+
+				")");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
+		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ITEMS);
 	}
 
 }
