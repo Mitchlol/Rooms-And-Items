@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-public class RoomsDB extends SQLiteOpenHelper {
+public class RoomsAndItemsDB extends SQLiteOpenHelper {
 	
 	
 	public static final class Schema{
@@ -27,7 +27,7 @@ public class RoomsDB extends SQLiteOpenHelper {
 		}
 	}
 
-	public RoomsDB(Context context) {
+	public RoomsAndItemsDB(Context context) {
 		super(context, Schema.DATABASE, null, Schema.VERSION);
 	}
 
