@@ -9,8 +9,10 @@ import android.provider.BaseColumns;
 
 public class RoomsDB extends SQLiteOpenHelper {
 	
-	public static final class SCHEMA{
+	
+	public static final class Schema{
 		public static final String DATABASE = "roomsanditems";
+		public static final int VERSION = 1;
 		public static final class Tables{
 			public static final String ROOMS = "rooms";
 			public static final class Rooms implements BaseColumns{
@@ -34,18 +36,18 @@ public class RoomsDB extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {	
-		db.execSQL("CREATE TABLE "+SCHEMA.Tables.ROOMS+"("+
-			SCHEMA.Tables.Rooms._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
-			SCHEMA.Tables.Rooms.WORLD_ID+" INTEGER"+","+
-			SCHEMA.Tables.Rooms.ROOM_X+" INTEGER"+","+
-			SCHEMA.Tables.Rooms.ROOM_NAME+" INTEGER"+","+
-			SCHEMA.Tables.Rooms.ROOM_NAME+" VARCHAR(64)"+
+		db.execSQL("CREATE TABLE "+Schema.Tables.ROOMS+"("+
+			Schema.Tables.Rooms._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
+			Schema.Tables.Rooms.WORLD_ID+" INTEGER"+","+
+			Schema.Tables.Rooms.ROOM_X+" INTEGER"+","+
+			Schema.Tables.Rooms.ROOM_NAME+" INTEGER"+","+
+			Schema.Tables.Rooms.ROOM_NAME+" VARCHAR(64)"+
 			")");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS " + SCHEMA.Tables.ROOMS);
+		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
 	}
 
 }
