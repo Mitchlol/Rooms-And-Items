@@ -1,4 +1,9 @@
-package com.MitchellLustig.rooms_and_items;
+package com.MitchellLustig.rooms_and_items.ui;
+
+import com.MitchellLustig.rooms_and_items.R;
+import com.MitchellLustig.rooms_and_items.R.id;
+import com.MitchellLustig.rooms_and_items.R.layout;
+import com.MitchellLustig.rooms_and_items.R.menu;
 
 import android.app.Activity;
 import android.app.ActionBar;
