@@ -1,20 +1,17 @@
 package com.MitchellLustig.rooms_and_items.ui;
 
-import com.MitchellLustig.rooms_and_items.R;
-import com.MitchellLustig.rooms_and_items.R.id;
-import com.MitchellLustig.rooms_and_items.R.layout;
-import com.MitchellLustig.rooms_and_items.R.menu;
-
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+
+import com.MitchellLustig.rooms_and_items.R;
+import com.MitchellLustig.rooms_and_items.game.GameController;
 
 public class MainActivity extends Activity {
 
@@ -26,6 +23,10 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		GameController mGameController = new GameController(this);
+		Log.i("RoomsAndItems",mGameController.getCurrentRoomInfo());
+		mGameController.close();
 	}
 
 	@Override
