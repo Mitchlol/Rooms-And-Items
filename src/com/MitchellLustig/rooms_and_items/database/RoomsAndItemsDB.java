@@ -1,5 +1,6 @@
 package com.MitchellLustig.rooms_and_items.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -37,7 +38,7 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 			Schema.Tables.Rooms._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
 			Schema.Tables.Rooms.WORLD_ID+" INTEGER"+","+
 			Schema.Tables.Rooms.ROOM_X+" INTEGER"+","+
-			Schema.Tables.Rooms.ROOM_NAME+" INTEGER"+","+
+			Schema.Tables.Rooms.ROOM_Y+" INTEGER"+","+
 			Schema.Tables.Rooms.ROOM_NAME+" VARCHAR(64)"+
 			")");
 		db.execSQL("CREATE TABLE "+Schema.Tables.ITEMS+"("+
@@ -45,6 +46,40 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 				Schema.Tables.Items.LOCATION+" VARCHAR(64)"+","+
 				Schema.Tables.Items.ITEM_NAME+" VARCHAR(64)"+
 				")");
+		
+		//Ugly but easy for now, hopefully future game data will be randomly generated
+		ContentValues Room1 = new ContentValues();
+		Room1.put(Schema.Tables.Rooms.ROOM_X, 1);
+		Room1.put(Schema.Tables.Rooms.ROOM_Y, 1);
+		Room1.put(Schema.Tables.Rooms.ROOM_NAME, "Room 1");
+		long room1_id = db.insert(Schema.Tables.ROOMS, null, Room1);
+		
+		ContentValues Room2 = new ContentValues();
+		Room2.put(Schema.Tables.Rooms.ROOM_X, 2);
+		Room2.put(Schema.Tables.Rooms.ROOM_Y, 1);
+		Room2.put(Schema.Tables.Rooms.ROOM_NAME, "Room 2");
+		long room2_id = db.insert(Schema.Tables.ROOMS, null, Room2);
+		
+		ContentValues Room3 = new ContentValues();
+		Room3.put(Schema.Tables.Rooms.ROOM_X, 2);
+		Room3.put(Schema.Tables.Rooms.ROOM_Y, 2);
+		Room3.put(Schema.Tables.Rooms.ROOM_NAME, "Room 3");
+		long room3_id = db.insert(Schema.Tables.ROOMS, null, Room3);
+		
+		ContentValues Item1 = new ContentValues();
+		Item1.put(Schema.Tables.Items.LOCATION, room1_id);
+		Item1.put(Schema.Tables.Items.ITEM_NAME, "r1i1");
+		db.insert(Schema.Tables.ROOMS, null, Item1);
+		
+		ContentValues Item2 = new ContentValues();
+		Item2.put(Schema.Tables.Items.LOCATION, room1_id);
+		Item2.put(Schema.Tables.Items.ITEM_NAME, "r1i2");
+		db.insert(Schema.Tables.ROOMS, null, Item2);
+		
+		ContentValues Item3 = new ContentValues();
+		Item3.put(Schema.Tables.Items.LOCATION, room3_id);
+		Item3.put(Schema.Tables.Items.ITEM_NAME, "aegis");
+		db.insert(Schema.Tables.ROOMS, null, Item3);
 	}
 
 	@Override

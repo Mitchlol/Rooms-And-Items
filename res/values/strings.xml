@@ -4,8 +4,4 @@
     <string name="app_name">Rooms-And-Items</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="gamedata_rooms">[{name: "Room 1", roomx: "1", roomy: "1"},{name: "Room 2", roomx: "2", roomy: "1"}, {name: "Room 3", roomx: "2", roomy: "2"}]</string>
-    <string name="gamedata_items">[{name: "r1i1", location: "Room 1"}, {name: "r1i2", location: "Room 1"}, {name: "r2i1", location: "Room 2"}, {name: "aegis", location: "Room 3"}, {name: "cheese", location: "Room 3"}]</string>
-    
-
 </resources>
