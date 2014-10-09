@@ -2,6 +2,7 @@ package com.MitchellLustig.rooms_and_items.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -86,6 +87,22 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ITEMS);
+	}
+	
+	public int getRoomCount(){
+		Cursor cursor = getReadableDatabase().query(Schema.Tables.ROOMS, new String[]{"count(*)"}, null, null, null, null, null);
+		cursor.moveToFirst();
+		return cursor.getInt(cursor.getColumnIndex("count(*)"));
+	}
+	
+	public Cursor getRooms(){
+		return getReadableDatabase().query(Schema.Tables.ROOMS, //table
+			null,//columns, blank for all
+			null, //selections 
+			null, //selection Args
+			null, //group by
+			null, //having
+			null);//order by	
 	}
 
 }
