@@ -70,17 +70,17 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 		ContentValues Item1 = new ContentValues();
 		Item1.put(Schema.Tables.Items.LOCATION, room1_id);
 		Item1.put(Schema.Tables.Items.ITEM_NAME, "r1i1");
-		db.insert(Schema.Tables.ROOMS, null, Item1);
+		db.insert(Schema.Tables.ITEMS, null, Item1);
 		
 		ContentValues Item2 = new ContentValues();
 		Item2.put(Schema.Tables.Items.LOCATION, room1_id);
 		Item2.put(Schema.Tables.Items.ITEM_NAME, "r1i2");
-		db.insert(Schema.Tables.ROOMS, null, Item2);
+		db.insert(Schema.Tables.ITEMS, null, Item2);
 		
 		ContentValues Item3 = new ContentValues();
 		Item3.put(Schema.Tables.Items.LOCATION, room3_id);
 		Item3.put(Schema.Tables.Items.ITEM_NAME, "aegis");
-		db.insert(Schema.Tables.ROOMS, null, Item3);
+		db.insert(Schema.Tables.ITEMS, null, Item3);
 	}
 
 	@Override
