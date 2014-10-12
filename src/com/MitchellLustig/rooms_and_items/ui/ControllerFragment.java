@@ -1,9 +1,16 @@
 package com.MitchellLustig.rooms_and_items.ui;
 
+import com.MitchellLustig.rooms_and_items.R;
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 
-public class ControllerFragment extends Fragment {
+public class ControllerFragment extends Fragment implements OnClickListener{
 	
 	public interface ControllerListener{
 		public void onMoveLeft();
@@ -32,10 +39,15 @@ public class ControllerFragment extends Fragment {
 
 	ControllerListener mCallback = deadCallback;
 
-	public ControllerFragment() {
+	public ControllerFragment(){
+	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		View root = inflater.inflate(R.layout.fragment_controller, container, false);
+		return root;
 	}
 	
-	 @Override
+	@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -45,10 +57,15 @@ public class ControllerFragment extends Fragment {
             throw new ClassCastException(activity.toString() + " must implement ControllerListener");
         }
     }
-	 @Override
+	@Override
 	public void onDetach() {
 		super.onDetach();
 		mCallback = deadCallback;
+	}
+
+	@Override
+	public void onClick(View view) {
+		
 	}
 
 
