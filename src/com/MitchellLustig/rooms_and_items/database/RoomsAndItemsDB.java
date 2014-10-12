@@ -94,7 +94,7 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 		
 		ContentValues User1 = new ContentValues();
 		User1.put(Schema.Tables.Users.LOCATION, room1_id);
-		User1.put(Schema.Tables.Users.USER_NAME, "aegis");
+		User1.put(Schema.Tables.Users.USER_NAME, "Mitch Lustig");
 		db.insert(Schema.Tables.USERS, null, User1);
 	}
 
@@ -113,6 +113,26 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 	
 	public Cursor getRooms(){
 		return getReadableDatabase().query(Schema.Tables.ROOMS, //table
+			null,//columns, blank for all
+			null, //selections 
+			null, //selection Args
+			null, //group by
+			null, //having
+			null);//order by	
+	}
+	
+	public Cursor getRoom(String roomId){
+		return getReadableDatabase().query(Schema.Tables.ROOMS, //table
+			null,//columns, blank for all
+			Schema.Tables.Rooms._ID + " = ?", //selections 
+			new String[]{roomId}, //selection Args
+			null, //group by
+			null, //having
+			null);//order by	
+	}
+	
+	public Cursor getUsers(){
+		return getReadableDatabase().query(Schema.Tables.USERS, //table
 			null,//columns, blank for all
 			null, //selections 
 			null, //selection Args
