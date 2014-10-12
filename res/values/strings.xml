@@ -4,4 +4,8 @@
     <string name="app_name">Rooms-And-Items</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <string name="contoller_button_move">Move</string>
+    <string name="contoller_button_pickup">Pick up</string>
+    <string name="contoller_button_putdown">Put down</string>
 </resources>
