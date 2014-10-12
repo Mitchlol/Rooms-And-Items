@@ -26,6 +26,11 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 				public static final String LOCATION = "location";
 				public static final String ITEM_NAME = "itemname";
 			}
+			public static final String USERS = "users";
+			public static final class Users implements BaseColumns{
+				public static final String LOCATION = "location";
+				public static final String USER_NAME = "itemname";
+			}
 		}
 	}
 
@@ -46,6 +51,11 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 				Schema.Tables.Items._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
 				Schema.Tables.Items.LOCATION+" VARCHAR(64)"+","+
 				Schema.Tables.Items.ITEM_NAME+" VARCHAR(64)"+
+				")");
+		db.execSQL("CREATE TABLE "+Schema.Tables.USERS+"("+
+				Schema.Tables.Users._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
+				Schema.Tables.Users.LOCATION+" VARCHAR(64)"+","+
+				Schema.Tables.Users.USER_NAME+" VARCHAR(64)"+
 				")");
 		
 		//Ugly but easy for now, hopefully future game data will be randomly generated
@@ -81,12 +91,18 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 		Item3.put(Schema.Tables.Items.LOCATION, room3_id);
 		Item3.put(Schema.Tables.Items.ITEM_NAME, "aegis");
 		db.insert(Schema.Tables.ITEMS, null, Item3);
+		
+		ContentValues User1 = new ContentValues();
+		User1.put(Schema.Tables.Users.LOCATION, room1_id);
+		User1.put(Schema.Tables.Users.USER_NAME, "aegis");
+		db.insert(Schema.Tables.USERS, null, User1);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ITEMS);
+		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.USERS);
 	}
 	
 	public int getRoomCount(){
