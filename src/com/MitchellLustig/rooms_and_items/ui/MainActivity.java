@@ -1,19 +1,16 @@
 package com.MitchellLustig.rooms_and_items.ui;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.MitchellLustig.rooms_and_items.R;
 import com.MitchellLustig.rooms_and_items.game.GameController;
+import com.MitchellLustig.rooms_and_items.ui.ControllerFragment.ControllerListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ControllerListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +18,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, new ControllerFragment()).commit();
 		}
 		
 		GameController mGameController = new GameController(this);
@@ -48,20 +45,22 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
+	@Override
+	public void onMoveLeft() {
+	}
+	@Override
+	public void onMoveRight() {
+	}
+	@Override
+	public void onMoveUp() {
+	}
+	@Override
+	public void onMoveDown() {
+	}
+	@Override
+	public void onPickItem() {
+	}
+	@Override
+	public void onPlaceItem() {
 	}
 }
