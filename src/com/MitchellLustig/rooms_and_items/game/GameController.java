@@ -20,11 +20,14 @@ public class GameController {
 		cursor.moveToFirst();
 		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.USER_NAME));
 	}
-	public Point getCurrentUserLocation(){
+	public String getCurrentUserLocation(){
 		Cursor cursor = db.getUsers();
 		cursor.moveToFirst();
-		String roomId = cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.LOCATION));
-		cursor = db.getRoom(roomId);
+		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.LOCATION));
+	}
+	
+	public Point getRoomLocation(String roomId){
+		Cursor cursor = db.getRoom(roomId);
 		cursor.moveToFirst();
 		int roomX = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_X));
 		int roomY = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_Y));
