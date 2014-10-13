@@ -43,6 +43,14 @@ public class GameController {
 		return getRoomName(getCurrentUserLocation());
 	}
 	
+	public Cursor getCurrentRoomItems(){
+		return db.getRoomItems(getCurrentUserLocation());
+	}
+	
+	public int getCurrentRoomItemCount(){
+		return getCurrentRoomItems().getCount();
+	}
+	
 	public Point getRoomLocation(String roomId){
 		Cursor cursor = db.getRoom(roomId);
 		cursor.moveToFirst();

@@ -40,6 +40,7 @@ public class MainActivity extends Activity implements ControllerListener{
 		mDisplayFragment.setUser(mGameController.getCurrentUserName());
 		mDisplayFragment.setInventory(""+mGameController.getCurrentUserItemCount());
 		mDisplayFragment.setRoom(mGameController.getCurrentRoomName() + " " + mGameController.getRoomLocation(mGameController.getCurrentUserLocation()));
+		mDisplayFragment.setItems(""+mGameController.getCurrentRoomItemCount());
 	}
 	
 	protected void updateController(){
