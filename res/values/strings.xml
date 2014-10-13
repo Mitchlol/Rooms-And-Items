@@ -14,5 +14,9 @@
     <string name="display_room">Room:&#160;</string>
     <string name="display_items">Item count:&#160;</string>
     
+    <string name="listdialog_titleroom">Pick up item</string>
+    <string name="listdialog_titleuser">Place item</string>
+    <string name="listdialog_cancel">Cancel</string>
+    
     
 </resources>

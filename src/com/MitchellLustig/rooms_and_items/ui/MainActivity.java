@@ -1,13 +1,16 @@
 package com.MitchellLustig.rooms_and_items.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.MitchellLustig.rooms_and_items.R;
+import com.MitchellLustig.rooms_and_items.database.RoomsAndItemsDB.Schema;
 import com.MitchellLustig.rooms_and_items.game.GameController;
 import com.MitchellLustig.rooms_and_items.ui.ControllerFragment.ControllerListener;
 
@@ -109,8 +112,17 @@ public class MainActivity extends Activity implements ControllerListener{
 	}
 	@Override
 	public void onPickItem() {
-		//Toast.makeText(this, "pick", Toast.LENGTH_SHORT).show();
-		Toast.makeText(this, "Current location = "+mGameController.getRoomLocation(mGameController.getCurrentUserLocation()), Toast.LENGTH_SHORT).show();
+		Cursor cursor = mGameController.getCurrentRoomItems();
+		new AlertDialog.Builder(this)
+		.setTitle(R.string.listdialog_titleroom)
+		.setCursor(cursor, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		        Toast.makeText(getApplicationContext(), "Selection: " + item, Toast.LENGTH_SHORT).show();
+		    }
+		}, Schema.Tables.Items.ITEM_NAME)
+		.setNegativeButton(R.string.listdialog_cancel, null)
+		.create()
+		.show();
 	}
 	@Override
 	public void onPlaceItem() {
