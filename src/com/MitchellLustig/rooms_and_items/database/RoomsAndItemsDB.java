@@ -78,17 +78,17 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 		long room3_id = db.insert(Schema.Tables.ROOMS, null, Room3);
 		
 		ContentValues Item1 = new ContentValues();
-		Item1.put(Schema.Tables.Items.LOCATION, room1_id);
+		Item1.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+room1_id));
 		Item1.put(Schema.Tables.Items.ITEM_NAME, "r1i1");
 		db.insert(Schema.Tables.ITEMS, null, Item1);
 		
 		ContentValues Item2 = new ContentValues();
-		Item2.put(Schema.Tables.Items.LOCATION, room1_id);
+		Item2.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+room1_id));
 		Item2.put(Schema.Tables.Items.ITEM_NAME, "r1i2");
 		db.insert(Schema.Tables.ITEMS, null, Item2);
 		
 		ContentValues Item3 = new ContentValues();
-		Item3.put(Schema.Tables.Items.LOCATION, room3_id);
+		Item3.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+room3_id));
 		Item3.put(Schema.Tables.Items.ITEM_NAME, "aegis");
 		db.insert(Schema.Tables.ITEMS, null, Item3);
 		
@@ -103,6 +103,14 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ITEMS);
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.USERS);
+	}
+	
+	public String createItemLocationRoom(String roomId){
+		return "room_" + roomId;
+	}
+	
+	public String createItemLocationUser(String roomId){
+		return "user_" + roomId;
 	}
 	
 	public int getRoomCount(){
