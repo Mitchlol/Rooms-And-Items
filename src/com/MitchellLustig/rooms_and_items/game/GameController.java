@@ -30,6 +30,14 @@ public class GameController {
 		cursor.moveToFirst();
 		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.LOCATION));
 	}
+	public Cursor getCurrentUserItems(){
+		Cursor cursor = db.getUserItems(getCurrentUserId());
+		cursor.moveToFirst();
+		return cursor;
+	}
+	public int getCurrentUserItemCount(){
+		return getCurrentUserItems().getCount();
+	}
 	
 	public String getCurrentRoomName(){
 		return getRoomName(getCurrentUserLocation());
