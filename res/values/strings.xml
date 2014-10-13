@@ -8,4 +8,11 @@
     <string name="contoller_button_move">Move</string>
     <string name="contoller_button_pickup">Pick up</string>
     <string name="contoller_button_putdown">Put down</string>
+    
+    <string name="display_user">User:&#160;</string>
+    <string name="display_inventory">Inventory count:&#160;</string>
+    <string name="display_room">Room:&#160;</string>
+    <string name="display_items">Item count:&#160;</string>
+    
+    
 </resources>
