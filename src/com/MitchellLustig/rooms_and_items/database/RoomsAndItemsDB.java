@@ -131,6 +131,16 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 			null);//order by	
 	}
 	
+	public Cursor getRoom(int x, int y){
+		return getReadableDatabase().query(Schema.Tables.ROOMS, //table
+			null,//columns, blank for all
+			Schema.Tables.Rooms.ROOM_X + " = ? AND " + Schema.Tables.Rooms.ROOM_Y + " = ?", //selections 
+			new String[]{""+x, ""+y}, //selection Args
+			null, //group by
+			null, //having
+			null);//order by	
+	}
+	
 	public Cursor getUsers(){
 		return getReadableDatabase().query(Schema.Tables.USERS, //table
 			null,//columns, blank for all
