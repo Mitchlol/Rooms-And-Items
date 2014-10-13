@@ -150,5 +150,16 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 			null, //having
 			null);//order by	
 	}
+	
+	public int setUserLocation(String user, String roomId){
+		ContentValues update = new ContentValues();
+		update.put(Schema.Tables.Users.LOCATION, roomId);
+		
+		return getReadableDatabase().update(Schema.Tables.USERS, //table
+			update,//content values
+			Schema.Tables.Users._ID + " = ?", //where 
+			new String[]{user} //where Args
+			);
+	}
 
 }
