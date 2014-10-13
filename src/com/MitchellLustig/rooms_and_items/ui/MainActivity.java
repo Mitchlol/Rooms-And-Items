@@ -13,6 +13,8 @@ import com.MitchellLustig.rooms_and_items.ui.ControllerFragment.ControllerListen
 
 public class MainActivity extends Activity implements ControllerListener{
 
+	DisplayFragment mDisplayFragment;
+	ControllerFragment mControllerFragment;
 	GameController mGameController;
 	
 	@Override
@@ -20,14 +22,28 @@ public class MainActivity extends Activity implements ControllerListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new ControllerFragment()).commit();
+			mDisplayFragment = new DisplayFragment();
+			mControllerFragment = new ControllerFragment();
+			getFragmentManager().beginTransaction().add(R.id.display_container, mDisplayFragment).commit();
+			getFragmentManager().beginTransaction().add(R.id.controller_container, mControllerFragment).commit();
 		}
 		
 		mGameController = new GameController(this);
 	}
 	
-	
+	protected void updateDisplay(){
+		mDisplayFragment.setUser(mGameController.getCurrentUserName());
+		mDisplayFragment.setRoom(mGameController.getCurrentRoomName() + " " + mGameController.getRoomLocation(mGameController.getCurrentUserLocation()));
+	}
+
+	@Override
+	protected void onResume() {
+		updateDisplay();
+		super.onResume();
+	}
+
+
+
 
 	@Override
 	protected void onDestroy() {
@@ -58,19 +74,23 @@ public class MainActivity extends Activity implements ControllerListener{
 
 	@Override
 	public void onMoveLeft() {
-		Toast.makeText(this, mGameController.moveLeft()? "Moved" :"No door on the left.", Toast.LENGTH_SHORT).show();
+		mGameController.moveLeft();
+		updateDisplay();
 	}
 	@Override
 	public void onMoveRight() {
-		Toast.makeText(this, mGameController.moveRight()? "Moved" :"No door on the right.", Toast.LENGTH_SHORT).show();
+		mGameController.moveRight();
+		updateDisplay();
 	}
 	@Override
 	public void onMoveUp() {
-		Toast.makeText(this, mGameController.moveUp()? "Moved" :"No door on the ceiling.", Toast.LENGTH_SHORT).show();
+		mGameController.moveUp();
+		updateDisplay();
 	}
 	@Override
 	public void onMoveDown() {
-		Toast.makeText(this, mGameController.moveDown()? "Moved" :"No door on floor.", Toast.LENGTH_SHORT).show();
+		mGameController.moveDown();
+		updateDisplay();
 	}
 	@Override
 	public void onPickItem() {
@@ -80,6 +100,5 @@ public class MainActivity extends Activity implements ControllerListener{
 	@Override
 	public void onPlaceItem() {
 		//Toast.makeText(this, "put", Toast.LENGTH_SHORT).show();
-		Toast.makeText(this, mGameController.getCurrentUserName(), Toast.LENGTH_SHORT).show();
 	}
 }

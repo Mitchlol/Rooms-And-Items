@@ -32,9 +32,7 @@ public class GameController {
 	}
 	
 	public String getCurrentRoomName(){
-		Cursor cursor = db.getRooms();
-		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_NAME));
+		return getRoomName(getCurrentUserLocation());
 	}
 	
 	public Point getRoomLocation(String roomId){
@@ -43,6 +41,12 @@ public class GameController {
 		int roomX = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_X));
 		int roomY = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_Y));
 		return new Point(roomX, roomY);
+	}
+	
+	public String getRoomName(String roomId){
+		Cursor cursor = db.getRoom(roomId);
+		cursor.moveToFirst();
+		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_NAME));
 	}
 	
 	public String getRoomUp(String roomId){

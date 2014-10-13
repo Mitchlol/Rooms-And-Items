@@ -1,8 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/root"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+    <FrameLayout android:id="@+id/display_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.MitchellLustig.rooms_and_items.ui.MainActivity"
-    tools:ignore="MergeRootFrame" />
+	android:layout_height="wrap_content"
+    />
+    <FrameLayout android:id="@+id/controller_container"
+    android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+    />
+    
+</LinearLayout>
 
