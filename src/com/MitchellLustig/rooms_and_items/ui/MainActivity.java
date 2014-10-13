@@ -25,9 +25,17 @@ public class MainActivity extends Activity implements ControllerListener{
 		}
 		
 		mGameController = new GameController(this);
-		Log.i("RoomsAndItems",mGameController.getCurrentRoomName());
-		mGameController.close();
 	}
+	
+	
+
+	@Override
+	protected void onDestroy() {
+		mGameController.close();
+		super.onDestroy();
+	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
