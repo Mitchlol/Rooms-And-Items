@@ -139,6 +139,10 @@ public class GameController {
 		}
 	}
 	
+	public void pickUpItem(String itemId){
+		db.setItemUser(itemId, getCurrentUserId());
+	}
+	
 	public void close(){
 		db.close();
 	}

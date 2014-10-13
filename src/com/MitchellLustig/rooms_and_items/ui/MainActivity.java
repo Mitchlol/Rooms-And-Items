@@ -112,12 +112,14 @@ public class MainActivity extends Activity implements ControllerListener{
 	}
 	@Override
 	public void onPickItem() {
-		Cursor cursor = mGameController.getCurrentRoomItems();
+		final Cursor cursor = mGameController.getCurrentRoomItems();
 		new AlertDialog.Builder(this)
 		.setTitle(R.string.listdialog_titleroom)
 		.setCursor(cursor, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
-		        Toast.makeText(getApplicationContext(), "Selection: " + item, Toast.LENGTH_SHORT).show();
+		    	cursor.moveToPosition(item);
+		        mGameController.pickUpItem(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
+		        updateUI();
 		    }
 		}, Schema.Tables.Items.ITEM_NAME)
 		.setNegativeButton(R.string.listdialog_cancel, null)
