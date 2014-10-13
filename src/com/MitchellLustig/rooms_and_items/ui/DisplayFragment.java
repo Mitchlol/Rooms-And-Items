@@ -18,11 +18,11 @@ public class DisplayFragment extends Fragment{
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		View root = inflater.inflate(R.layout.fragment_controller, container, false);
-		user = (Button)root.findViewById(R.id.user);
-		inventory = (Button)root.findViewById(R.id.inventory);
-		room = (Button)root.findViewById(R.id.room);
-		items = (Button)root.findViewById(R.id.items);
+		View root = inflater.inflate(R.layout.fragment_display, container, false);
+		user = (TextView)root.findViewById(R.id.user);
+		inventory = (TextView)root.findViewById(R.id.inventory);
+		room = (TextView)root.findViewById(R.id.room);
+		items = (TextView)root.findViewById(R.id.items);
 
 		return root;
 	}
