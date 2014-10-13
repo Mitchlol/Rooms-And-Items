@@ -98,6 +98,13 @@ public class ControllerFragment extends Fragment implements OnClickListener{
 			mCallback.onPlaceItem();
 		}
 	}
+	
+	public void setDirectionButtons(boolean upEnabled, boolean rightEnabled, boolean downEnabled, boolean leftEnabled){
+		up.setEnabled(upEnabled);
+		right.setEnabled(rightEnabled);
+		down.setEnabled(downEnabled);
+		left.setEnabled(leftEnabled);
+	}
 
 
 }

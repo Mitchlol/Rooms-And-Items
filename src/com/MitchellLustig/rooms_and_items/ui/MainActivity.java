@@ -31,14 +31,27 @@ public class MainActivity extends Activity implements ControllerListener{
 		mGameController = new GameController(this);
 	}
 	
+	protected void updateUI(){
+		updateDisplay();
+		updateController();
+	}
+	
 	protected void updateDisplay(){
 		mDisplayFragment.setUser(mGameController.getCurrentUserName());
 		mDisplayFragment.setRoom(mGameController.getCurrentRoomName() + " " + mGameController.getRoomLocation(mGameController.getCurrentUserLocation()));
 	}
+	
+	protected void updateController(){
+		mControllerFragment.setDirectionButtons(
+				mGameController.getRoomUp(mGameController.getCurrentUserLocation()) != null, 
+				mGameController.getRoomRight(mGameController.getCurrentUserLocation()) != null, 
+				mGameController.getRoomDown(mGameController.getCurrentUserLocation()) != null, 
+				mGameController.getRoomLeft(mGameController.getCurrentUserLocation()) != null);
+	}
 
 	@Override
 	protected void onResume() {
-		updateDisplay();
+		updateUI();
 		super.onResume();
 	}
 
@@ -75,22 +88,22 @@ public class MainActivity extends Activity implements ControllerListener{
 	@Override
 	public void onMoveLeft() {
 		mGameController.moveLeft();
-		updateDisplay();
+		updateUI();
 	}
 	@Override
 	public void onMoveRight() {
 		mGameController.moveRight();
-		updateDisplay();
+		updateUI();
 	}
 	@Override
 	public void onMoveUp() {
 		mGameController.moveUp();
-		updateDisplay();
+		updateUI();
 	}
 	@Override
 	public void onMoveDown() {
 		mGameController.moveDown();
-		updateDisplay();
+		updateUI();
 	}
 	@Override
 	public void onPickItem() {
