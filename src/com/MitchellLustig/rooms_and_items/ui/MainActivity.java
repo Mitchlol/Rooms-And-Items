@@ -52,6 +52,9 @@ public class MainActivity extends Activity implements ControllerListener{
 				mGameController.getRoomRight(mGameController.getCurrentUserLocation()) != null, 
 				mGameController.getRoomDown(mGameController.getCurrentUserLocation()) != null, 
 				mGameController.getRoomLeft(mGameController.getCurrentUserLocation()) != null);
+		mControllerFragment.setItemButtons(
+				mGameController.getCurrentRoomItemCount() > 0,
+				mGameController.getCurrentUserItemCount() > 0);
 	}
 
 	@Override

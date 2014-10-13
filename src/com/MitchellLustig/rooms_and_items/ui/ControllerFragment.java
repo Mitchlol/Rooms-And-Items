@@ -105,6 +105,11 @@ public class ControllerFragment extends Fragment implements OnClickListener{
 		down.setEnabled(downEnabled);
 		left.setEnabled(leftEnabled);
 	}
+	
+	public void setItemButtons(boolean pickEnabled, boolean putEnabled){
+		pick.setEnabled(pickEnabled);
+		put.setEnabled(putEnabled);
+	}
 
 
 }
