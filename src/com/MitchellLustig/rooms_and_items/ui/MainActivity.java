@@ -13,6 +13,8 @@ import com.MitchellLustig.rooms_and_items.ui.ControllerFragment.ControllerListen
 
 public class MainActivity extends Activity implements ControllerListener{
 
+	GameController mGameController;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,8 +24,8 @@ public class MainActivity extends Activity implements ControllerListener{
 					.add(R.id.container, new ControllerFragment()).commit();
 		}
 		
-		GameController mGameController = new GameController(this);
-		Log.i("RoomsAndItems",mGameController.getCurrentRoomInfo());
+		mGameController = new GameController(this);
+		Log.i("RoomsAndItems",mGameController.getCurrentRoomName());
 		mGameController.close();
 	}
 
@@ -48,26 +50,28 @@ public class MainActivity extends Activity implements ControllerListener{
 
 	@Override
 	public void onMoveLeft() {
-		Toast.makeText(this, "left", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, mGameController.moveLeft()? "Moved" :"No door on the left.", Toast.LENGTH_SHORT).show();
 	}
 	@Override
 	public void onMoveRight() {
-		Toast.makeText(this, "right", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, mGameController.moveRight()? "Moved" :"No door on the right.", Toast.LENGTH_SHORT).show();
 	}
 	@Override
 	public void onMoveUp() {
-		Toast.makeText(this, "up", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, mGameController.moveUp()? "Moved" :"No door on the ceiling.", Toast.LENGTH_SHORT).show();
 	}
 	@Override
 	public void onMoveDown() {
-		Toast.makeText(this, "down", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, mGameController.moveDown()? "Moved" :"No door on floor.", Toast.LENGTH_SHORT).show();
 	}
 	@Override
 	public void onPickItem() {
-		Toast.makeText(this, "pick", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "pick", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Current location = "+mGameController.getRoomLocation(mGameController.getCurrentUserLocation()), Toast.LENGTH_SHORT).show();
 	}
 	@Override
 	public void onPlaceItem() {
-		Toast.makeText(this, "put", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "put", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, mGameController.getCurrentUserName(), Toast.LENGTH_SHORT).show();
 	}
 }
