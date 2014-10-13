@@ -109,8 +109,8 @@ public class MainActivity extends Activity implements ControllerListener{
 	}
 	@Override
 	public void onPickItem() {
-		//Toast.makeText(this, "pick", Toast.LENGTH_SHORT).show();
 		Toast.makeText(this, "Current location = "+mGameController.getRoomLocation(mGameController.getCurrentUserLocation()), Toast.LENGTH_SHORT).show();
+		getFragmentManager().beginTransaction().add(R.id.controller_container, new ListDialogFragment(mGameController.getCurrentRoomItems())).commit();
 	}
 	@Override
 	public void onPlaceItem() {
