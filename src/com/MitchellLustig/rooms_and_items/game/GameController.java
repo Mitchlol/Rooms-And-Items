@@ -187,6 +187,10 @@ public class GameController {
 		db.setItemRoom(itemId, getCurrentUserRoom());
 	}
 	
+	public void newGame(){
+		db.newGame(db.getWritableDatabase());
+	}
+	
 	public void close(){
 		db.close();
 	}
