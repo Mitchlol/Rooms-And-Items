@@ -200,5 +200,16 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 			new String[]{itemId} //where Args
 			);
 	}
+	
+	public int setItemRoom(String itemId, String roomId){
+		ContentValues update = new ContentValues();
+		update.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(roomId));
+		
+		return getReadableDatabase().update(Schema.Tables.ITEMS, //table
+			update,//content values
+			Schema.Tables.Items._ID + " = ?", //where 
+			new String[]{itemId} //where Args
+			);
+	}
 
 }

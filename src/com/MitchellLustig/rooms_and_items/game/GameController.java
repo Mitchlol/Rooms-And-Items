@@ -143,6 +143,10 @@ public class GameController {
 		db.setItemUser(itemId, getCurrentUserId());
 	}
 	
+	public void putDownItem(String itemId){
+		db.setItemRoom(itemId, getCurrentUserLocation());
+	}
+	
 	public void close(){
 		db.close();
 	}

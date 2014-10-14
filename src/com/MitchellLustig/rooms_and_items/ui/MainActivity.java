@@ -131,6 +131,18 @@ public class MainActivity extends Activity implements ControllerListener{
 	}
 	@Override
 	public void onPlaceItem() {
-		//Toast.makeText(this, "put", Toast.LENGTH_SHORT).show();
+		final Cursor cursor = mGameController.getCurrentUserItems();
+		new AlertDialog.Builder(this)
+		.setTitle(R.string.listdialog_titleuser)
+		.setCursor(cursor, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		    	cursor.moveToPosition(item);
+		        mGameController.putDownItem(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
+		        updateUI();
+		    }
+		}, Schema.Tables.Items.ITEM_NAME)
+		.setNegativeButton(R.string.listdialog_cancel, null)
+		.create()
+		.show();
 	}
 }
