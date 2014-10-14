@@ -45,13 +45,13 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		createTables(db);
+		//will reset everything
 		newGame(db);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		dropTables(db);
+		//On create will be called, which in turn resets everything.
 	}
 	public void dropTables(SQLiteDatabase db){
 		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
@@ -101,9 +101,13 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 				db.insert(Schema.Tables.ITEMS, null, Item);
 			}
 		}
+		Cursor roomsCursor = getRooms();
+		roomsCursor.moveToFirst();
+		String firstRoomId = roomsCursor.getString(roomsCursor.getColumnIndex(Schema.Tables.Rooms._ID));
+		roomsCursor.close();
 		ContentValues User = new ContentValues();
-		User.put(Schema.Tables.Users.LOCATION, 1);
-		User.put(Schema.Tables.Users.USER_NAME, "Mitch Lustig");
+		User.put(Schema.Tables.Users.LOCATION, firstRoomId);
+		User.put(Schema.Tables.Users.USER_NAME, "John Bender");
 		db.insert(Schema.Tables.USERS, null, User);
 	}
 	
