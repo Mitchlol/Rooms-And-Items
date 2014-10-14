@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +46,8 @@ public class MainActivity extends Activity implements ControllerListener{
 	protected void updateDisplay(){
 		mDisplayFragment.setUser(mGameController.getCurrentUserName());
 		mDisplayFragment.setInventory(""+mGameController.getCurrentUserItemCount());
-		mDisplayFragment.setRoom(mGameController.getCurrentUserRoomName() + " " + mGameController.getUserCurrentLocationPoint());
+		Point location = mGameController.getUserCurrentLocationPoint();
+		mDisplayFragment.setRoom(mGameController.getCurrentUserRoomName() + " (" + location.x + "," + location.y + ")");
 		mDisplayFragment.setItems(""+mGameController.getCurrentRoomItemCount());
 	}
 	
