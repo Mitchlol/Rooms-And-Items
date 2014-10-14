@@ -61,6 +61,17 @@ public class GameController {
 		return count;
 	}
 	
+	public Cursor getItems(){
+		return db.getItems();
+	}
+	
+	public int getItemCount(){
+		Cursor cursor = getItems();
+		int count = cursor.getCount();
+		cursor.close();
+		return count;
+	}
+	
 	private Point getRoomPoint(String roomId){
 		Cursor cursor = db.getRoom(roomId);
 		cursor.moveToFirst();
