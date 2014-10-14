@@ -3,6 +3,7 @@
 
     <string name="app_name">Rooms-And-Items</string>
     <string name="action_newgame">New Game</string>
+    <string name="action_setname">Set User Name</string>
     
     <string name="contoller_button_move">Move</string>
     <string name="contoller_button_pickup">Pick up</string>
@@ -16,6 +17,10 @@
     <string name="listdialog_titleroom">Pick up item</string>
     <string name="listdialog_titleuser">Place item</string>
     <string name="listdialog_cancel">Cancel</string>
+    
+    <string name="namedialog_title">Set User Name</string>
+    <string name="namedialog_ok">Save</string>
+    <string name="namedialog_cancel">Cancel</string>
     
     
 </resources>

@@ -9,11 +9,11 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.MitchellLustig.rooms_and_items.R;
 import com.MitchellLustig.rooms_and_items.database.RoomsAndItemsDB.Schema;
 import com.MitchellLustig.rooms_and_items.game.GameController;
-import com.MitchellLustig.rooms_and_items.game.LevelGenerator;
 import com.MitchellLustig.rooms_and_items.ui.ControllerFragment.ControllerListener;
 
 public class MainActivity extends Activity implements ControllerListener{
@@ -86,6 +86,21 @@ public class MainActivity extends Activity implements ControllerListener{
 		if (id == R.id.action_newgame) {
 			mGameController.newGame();
 			updateUI();
+			return true;
+		}
+		if (id == R.id.action_setname) {
+			final EditText input = new EditText(this);
+			new AlertDialog.Builder(this)
+			.setTitle(R.string.namedialog_title)
+			.setView(input)
+			.setPositiveButton(R.string.namedialog_ok, new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int whichButton) {
+		            mGameController.setCurrentUserName(input.getText().toString());
+					updateUI();
+		        }
+		    }).setNegativeButton(R.string.namedialog_cancel, null)
+			.create()
+			.show();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

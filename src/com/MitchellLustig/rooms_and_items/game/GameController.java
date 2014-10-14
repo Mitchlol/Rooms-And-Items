@@ -190,6 +190,9 @@ public class GameController {
 	public void newGame(){
 		db.newGame(db.getWritableDatabase());
 	}
+	public void setCurrentUserName(String name){
+		db.setUserName(getCurrentUserId(), name);
+	}
 	
 	public void close(){
 		db.close();
