@@ -3,11 +3,11 @@ package com.MitchellLustig.rooms_and_items.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.MitchellLustig.rooms_and_items.R;
 import com.MitchellLustig.rooms_and_items.database.RoomsAndItemsDB.Schema;
@@ -65,16 +65,11 @@ public class MainActivity extends Activity implements ControllerListener{
 		super.onResume();
 	}
 
-
-
-
 	@Override
 	protected void onDestroy() {
 		mGameController.close();
 		super.onDestroy();
 	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,10 +119,17 @@ public class MainActivity extends Activity implements ControllerListener{
 		    public void onClick(DialogInterface dialog, int item) {
 		    	cursor.moveToPosition(item);
 		        mGameController.pickUpItem(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
+		        cursor.close();
 		        updateUI();
 		    }
 		}, Schema.Tables.Items.ITEM_NAME)
-		.setNegativeButton(R.string.listdialog_cancel, null)
+		.setNegativeButton(R.string.listdialog_cancel, new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				cursor.close();
+			}
+		})
+		.setCancelable(false)
 		.create()
 		.show();
 	}
@@ -140,10 +142,17 @@ public class MainActivity extends Activity implements ControllerListener{
 		    public void onClick(DialogInterface dialog, int item) {
 		    	cursor.moveToPosition(item);
 		        mGameController.putDownItem(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
+		        cursor.close();
 		        updateUI();
 		    }
 		}, Schema.Tables.Items.ITEM_NAME)
-		.setNegativeButton(R.string.listdialog_cancel, null)
+		.setNegativeButton(R.string.listdialog_cancel, new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				cursor.close();
+			}
+		})
+		.setCancelable(false)
 		.create()
 		.show();
 	}
