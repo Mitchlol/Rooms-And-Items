@@ -83,7 +83,7 @@ public class GameController {
 	
 	private String getRoomUp(String roomId){
 		Point room = getRoomPoint(roomId);
-		Cursor cursor =  db.getRoom(room.x, room.y+1);
+		Cursor cursor =  db.getRoom(room.x, room.y-1);
 		if(cursor.getCount() == 0){
 			cursor.close();
 			return null;
@@ -96,7 +96,7 @@ public class GameController {
 	}
 	private String getRoomDown(String roomId){
 		Point room = getRoomPoint(roomId);
-		Cursor cursor =  db.getRoom(room.x, room.y-1);
+		Cursor cursor =  db.getRoom(room.x, room.y+1);
 		if(cursor.getCount() == 0){
 			cursor.close();
 			return null;
