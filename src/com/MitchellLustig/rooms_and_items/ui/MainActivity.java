@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements ControllerListener{
 	protected void updateUI(){
 		updateDisplay();
 		updateController();
+        checkForGameWin();
 	}
 	
 	protected void updateDisplay(){
@@ -98,7 +99,8 @@ public class MainActivity extends Activity implements ControllerListener{
 		            mGameController.setCurrentUserName(input.getText().toString());
 					updateUI();
 		        }
-		    }).setNegativeButton(R.string.namedialog_cancel, null)
+		    })
+		    .setNegativeButton(R.string.namedialog_cancel, null)
 			.create()
 			.show();
 			return true;
@@ -171,5 +173,22 @@ public class MainActivity extends Activity implements ControllerListener{
 		.setCancelable(false)
 		.create()
 		.show();
+	}
+	
+	public void checkForGameWin(){
+		if(mGameController.getCurrentUserLocationPoint().x == 1 && mGameController.getCurrentUserLocationPoint().y == 1 && mGameController.getItemCount() == mGameController.getCurrentRoomItemCount()){
+			new AlertDialog.Builder(this)
+			.setTitle(R.string.winnerdialog_title)
+			.setMessage(getString(R.string.winnerdialog_text).replace("*", mGameController.getCurrentUserName()))
+			.setPositiveButton(R.string.winnerdialog_ok, new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int whichButton) {
+		        	mGameController.newGame();
+					updateUI();
+		        }
+		    })
+			.setCancelable(false)
+			.create()
+			.show();
+		}
 	}
 }
