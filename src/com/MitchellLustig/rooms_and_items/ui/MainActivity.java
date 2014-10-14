@@ -27,10 +27,12 @@ public class MainActivity extends Activity implements ControllerListener{
 		if (savedInstanceState == null) {
 			mDisplayFragment = new DisplayFragment();
 			mControllerFragment = new ControllerFragment();
-			getFragmentManager().beginTransaction().add(R.id.display_container, mDisplayFragment).commit();
-			getFragmentManager().beginTransaction().add(R.id.controller_container, mControllerFragment).commit();
+			getFragmentManager().beginTransaction().add(R.id.display_container, mDisplayFragment, "display").commit();
+			getFragmentManager().beginTransaction().add(R.id.controller_container, mControllerFragment, "controller").commit();
+		}else{
+			mDisplayFragment = (DisplayFragment)getFragmentManager().findFragmentByTag("display");
+			mControllerFragment = (ControllerFragment)getFragmentManager().findFragmentByTag("controller");
 		}
-		
 		mGameController = new GameController(this);
 	}
 	
