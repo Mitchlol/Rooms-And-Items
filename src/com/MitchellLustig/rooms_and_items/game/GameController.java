@@ -80,7 +80,7 @@ public class GameController {
 		cursor.close();
 		return new Point(roomX, roomY);
 	}
-	public Point getUserCurrentLocationPoint(){
+	public Point getCurrentUserLocationPoint(){
 		return getRoomPoint(getCurrentUserRoom());
 	}
 	
