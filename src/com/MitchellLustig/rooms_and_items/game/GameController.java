@@ -18,25 +18,32 @@ public class GameController {
 	public String getCurrentUserId(){
 		Cursor cursor = db.getUsers();
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Users._ID));
+		String id = cursor.getString(cursor.getColumnIndex(Schema.Tables.Users._ID));
+		cursor.close();
+		return id;
 	}
 	public String getCurrentUserName(){
 		Cursor cursor = db.getUsers();
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.USER_NAME));
+		String name = cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.USER_NAME)); 
+		cursor.close();
+		return name;
 	}
 	public String getCurrentUserLocation(){
 		Cursor cursor = db.getUsers();
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.LOCATION));
+		String location = cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.LOCATION)); 
+		cursor.close();
+		return location;
 	}
 	public Cursor getCurrentUserItems(){
-		Cursor cursor = db.getUserItems(getCurrentUserId());
-		cursor.moveToFirst();
-		return cursor;
+		return db.getUserItems(getCurrentUserId());
 	}
 	public int getCurrentUserItemCount(){
-		return getCurrentUserItems().getCount();
+		Cursor cursor = getCurrentUserItems();
+		int count = cursor.getCount();
+		cursor.close();
+		return count;
 	}
 	
 	public String getCurrentRoomName(){
@@ -48,7 +55,10 @@ public class GameController {
 	}
 	
 	public int getCurrentRoomItemCount(){
-		return getCurrentRoomItems().getCount();
+		Cursor cursor = getCurrentRoomItems();
+		int count = cursor.getCount();
+		cursor.close();
+		return count;
 	}
 	
 	public Point getRoomLocation(String roomId){
@@ -56,53 +66,68 @@ public class GameController {
 		cursor.moveToFirst();
 		int roomX = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_X));
 		int roomY = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_Y));
+		cursor.close();
 		return new Point(roomX, roomY);
 	}
 	
 	public String getRoomName(String roomId){
 		Cursor cursor = db.getRoom(roomId);
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_NAME));
+		String name = cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_NAME));
+		cursor.close();
+		return name;
 	}
 	
 	public String getRoomUp(String roomId){
 		Point room = getRoomLocation(roomId);
 		Cursor cursor =  db.getRoom(room.x, room.y+1);
 		if(cursor.getCount() == 0){
+			cursor.close();
 			return null;
 		}else{
 			cursor.moveToFirst();
-			return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			String id = cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			cursor.close();
+			return id;
 		}
 	}
 	public String getRoomDown(String roomId){
 		Point room = getRoomLocation(roomId);
 		Cursor cursor =  db.getRoom(room.x, room.y-1);
 		if(cursor.getCount() == 0){
+			cursor.close();
 			return null;
 		}else{
 			cursor.moveToFirst();
-			return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			String id = cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			cursor.close();
+			return id;
 		}
 	}
 	public String getRoomRight(String roomId){
 		Point room = getRoomLocation(roomId);
 		Cursor cursor =  db.getRoom(room.x+1, room.y);
 		if(cursor.getCount() == 0){
+			cursor.close();
 			return null;
 		}else{
 			cursor.moveToFirst();
-			return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			String id = cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			cursor.close();
+			return id;
 		}
 	}
 	public String getRoomLeft(String roomId){
 		Point room = getRoomLocation(roomId);
 		Cursor cursor =  db.getRoom(room.x-1, room.y);
 		if(cursor.getCount() == 0){
+			cursor.close();
 			return null;
 		}else{
 			cursor.moveToFirst();
-			return cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			String id = cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms._ID));
+			cursor.close();
+			return id;
 		}
 	}
 	
