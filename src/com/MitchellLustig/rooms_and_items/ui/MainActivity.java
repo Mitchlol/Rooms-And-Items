@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.MitchellLustig.rooms_and_items.R;
 import com.MitchellLustig.rooms_and_items.database.RoomsAndItemsDB.Schema;
 import com.MitchellLustig.rooms_and_items.game.GameController;
+import com.MitchellLustig.rooms_and_items.game.LevelGenerator;
 import com.MitchellLustig.rooms_and_items.ui.ControllerFragment.ControllerListener;
 
 public class MainActivity extends Activity implements ControllerListener{

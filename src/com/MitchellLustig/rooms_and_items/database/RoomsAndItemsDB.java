@@ -1,11 +1,16 @@
 package com.MitchellLustig.rooms_and_items.database;
 
+import java.util.Vector;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+
+import com.MitchellLustig.rooms_and_items.game.LevelGenerator;
+import com.MitchellLustig.rooms_and_items.game.LevelGenerator.Room;
 
 public class RoomsAndItemsDB extends SQLiteOpenHelper {
 	
@@ -39,7 +44,21 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onCreate(SQLiteDatabase db) {	
+	public void onCreate(SQLiteDatabase db) {
+		createTables(db);
+		newGame(db);
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		dropTables(db);
+	}
+	public void dropTables(SQLiteDatabase db){
+		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
+		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ITEMS);
+		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.USERS);
+	}
+	public void createTables(SQLiteDatabase db){
 		db.execSQL("CREATE TABLE "+Schema.Tables.ROOMS+"("+
 			Schema.Tables.Rooms._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
 			Schema.Tables.Rooms.WORLD_ID+" INTEGER"+","+
@@ -48,61 +67,44 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 			Schema.Tables.Rooms.ROOM_NAME+" VARCHAR(64)"+
 			")");
 		db.execSQL("CREATE TABLE "+Schema.Tables.ITEMS+"("+
-				Schema.Tables.Items._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
-				Schema.Tables.Items.LOCATION+" VARCHAR(64)"+","+
-				Schema.Tables.Items.ITEM_NAME+" VARCHAR(64)"+
-				")");
+			Schema.Tables.Items._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
+			Schema.Tables.Items.LOCATION+" VARCHAR(64)"+","+
+			Schema.Tables.Items.ITEM_NAME+" VARCHAR(64)"+
+			")");
 		db.execSQL("CREATE TABLE "+Schema.Tables.USERS+"("+
-				Schema.Tables.Users._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
-				Schema.Tables.Users.LOCATION+" VARCHAR(64)"+","+
-				Schema.Tables.Users.USER_NAME+" VARCHAR(64)"+
-				")");
-		
-		//Ugly but easy for now, hopefully future game data will be randomly generated
-		ContentValues Room1 = new ContentValues();
-		Room1.put(Schema.Tables.Rooms.ROOM_X, 1);
-		Room1.put(Schema.Tables.Rooms.ROOM_Y, 1);
-		Room1.put(Schema.Tables.Rooms.ROOM_NAME, "Room 1");
-		long room1_id = db.insert(Schema.Tables.ROOMS, null, Room1);
-		
-		ContentValues Room2 = new ContentValues();
-		Room2.put(Schema.Tables.Rooms.ROOM_X, 2);
-		Room2.put(Schema.Tables.Rooms.ROOM_Y, 1);
-		Room2.put(Schema.Tables.Rooms.ROOM_NAME, "Room 2");
-		long room2_id = db.insert(Schema.Tables.ROOMS, null, Room2);
-		
-		ContentValues Room3 = new ContentValues();
-		Room3.put(Schema.Tables.Rooms.ROOM_X, 2);
-		Room3.put(Schema.Tables.Rooms.ROOM_Y, 2);
-		Room3.put(Schema.Tables.Rooms.ROOM_NAME, "Room 3");
-		long room3_id = db.insert(Schema.Tables.ROOMS, null, Room3);
-		
-		ContentValues Item1 = new ContentValues();
-		Item1.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+room1_id));
-		Item1.put(Schema.Tables.Items.ITEM_NAME, "r1i1");
-		db.insert(Schema.Tables.ITEMS, null, Item1);
-		
-		ContentValues Item2 = new ContentValues();
-		Item2.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+room1_id));
-		Item2.put(Schema.Tables.Items.ITEM_NAME, "r1i2");
-		db.insert(Schema.Tables.ITEMS, null, Item2);
-		
-		ContentValues Item3 = new ContentValues();
-		Item3.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+room3_id));
-		Item3.put(Schema.Tables.Items.ITEM_NAME, "aegis");
-		db.insert(Schema.Tables.ITEMS, null, Item3);
-		
-		ContentValues User1 = new ContentValues();
-		User1.put(Schema.Tables.Users.LOCATION, room1_id);
-		User1.put(Schema.Tables.Users.USER_NAME, "Mitch Lustig");
-		db.insert(Schema.Tables.USERS, null, User1);
+			Schema.Tables.Users._ID+" INTEGER PRIMARY KEY AUTOINCREMENT "+","+
+			Schema.Tables.Users.LOCATION+" VARCHAR(64)"+","+
+			Schema.Tables.Users.USER_NAME+" VARCHAR(64)"+
+			")");
 	}
-
-	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ROOMS);
-		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.ITEMS);
-		db.execSQL("DROP TABLE IF EXISTS " + Schema.Tables.USERS);
+	
+	public void newGame(SQLiteDatabase db){
+		if(db == null){
+			db = getWritableDatabase();
+		}
+		//Reset everything
+		dropTables(db);
+		createTables(db);
+		//Generate level
+		LevelGenerator mLevelGenerator = new LevelGenerator(5, 5, .5f, .75f, 0.15f);
+		Vector<Room> rooms = mLevelGenerator.generate();
+		for(Room room: rooms){
+			ContentValues RoomCV = new ContentValues();
+			RoomCV.put(Schema.Tables.Rooms.ROOM_X, room.getPoint().x);
+			RoomCV.put(Schema.Tables.Rooms.ROOM_Y, room.getPoint().y);
+			RoomCV.put(Schema.Tables.Rooms.ROOM_NAME, room.getName());
+			long roomId = db.insert(Schema.Tables.ROOMS, null, RoomCV);
+			for(String itemName: room.getItems()){
+				ContentValues Item = new ContentValues();
+				Item.put(Schema.Tables.Items.LOCATION, createItemLocationRoom(""+roomId));
+				Item.put(Schema.Tables.Items.ITEM_NAME, itemName);
+				db.insert(Schema.Tables.ITEMS, null, Item);
+			}
+		}
+		ContentValues User = new ContentValues();
+		User.put(Schema.Tables.Users.LOCATION, 1);
+		User.put(Schema.Tables.Users.USER_NAME, "Mitch Lustig");
+		db.insert(Schema.Tables.USERS, null, User);
 	}
 	
 	public String createItemLocationRoom(String roomId){
