@@ -29,7 +29,7 @@ public class GameController {
 		cursor.close();
 		return name;
 	}
-	public String getCurrentUserLocation(){
+	public String getCurrentUserRoom(){
 		Cursor cursor = db.getUsers();
 		cursor.moveToFirst();
 		String location = cursor.getString(cursor.getColumnIndex(Schema.Tables.Users.LOCATION)); 
@@ -46,12 +46,12 @@ public class GameController {
 		return count;
 	}
 	
-	public String getCurrentRoomName(){
-		return getRoomName(getCurrentUserLocation());
+	public String getCurrentUserRoomName(){
+		return getRoomName(getCurrentUserRoom());
 	}
 	
 	public Cursor getCurrentRoomItems(){
-		return db.getRoomItems(getCurrentUserLocation());
+		return db.getRoomItems(getCurrentUserRoom());
 	}
 	
 	public int getCurrentRoomItemCount(){
@@ -61,7 +61,7 @@ public class GameController {
 		return count;
 	}
 	
-	public Point getRoomLocation(String roomId){
+	private Point getRoomPoint(String roomId){
 		Cursor cursor = db.getRoom(roomId);
 		cursor.moveToFirst();
 		int roomX = cursor.getInt(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_X));
@@ -69,8 +69,11 @@ public class GameController {
 		cursor.close();
 		return new Point(roomX, roomY);
 	}
+	public Point getUserCurrentLocationPoint(){
+		return getRoomPoint(getCurrentUserRoom());
+	}
 	
-	public String getRoomName(String roomId){
+	private String getRoomName(String roomId){
 		Cursor cursor = db.getRoom(roomId);
 		cursor.moveToFirst();
 		String name = cursor.getString(cursor.getColumnIndex(Schema.Tables.Rooms.ROOM_NAME));
@@ -78,8 +81,8 @@ public class GameController {
 		return name;
 	}
 	
-	public String getRoomUp(String roomId){
-		Point room = getRoomLocation(roomId);
+	private String getRoomUp(String roomId){
+		Point room = getRoomPoint(roomId);
 		Cursor cursor =  db.getRoom(room.x, room.y+1);
 		if(cursor.getCount() == 0){
 			cursor.close();
@@ -91,8 +94,8 @@ public class GameController {
 			return id;
 		}
 	}
-	public String getRoomDown(String roomId){
-		Point room = getRoomLocation(roomId);
+	private String getRoomDown(String roomId){
+		Point room = getRoomPoint(roomId);
 		Cursor cursor =  db.getRoom(room.x, room.y-1);
 		if(cursor.getCount() == 0){
 			cursor.close();
@@ -104,8 +107,8 @@ public class GameController {
 			return id;
 		}
 	}
-	public String getRoomRight(String roomId){
-		Point room = getRoomLocation(roomId);
+	private String getRoomRight(String roomId){
+		Point room = getRoomPoint(roomId);
 		Cursor cursor =  db.getRoom(room.x+1, room.y);
 		if(cursor.getCount() == 0){
 			cursor.close();
@@ -117,8 +120,8 @@ public class GameController {
 			return id;
 		}
 	}
-	public String getRoomLeft(String roomId){
-		Point room = getRoomLocation(roomId);
+	private String getRoomLeft(String roomId){
+		Point room = getRoomPoint(roomId);
 		Cursor cursor =  db.getRoom(room.x-1, room.y);
 		if(cursor.getCount() == 0){
 			cursor.close();
@@ -130,33 +133,45 @@ public class GameController {
 			return id;
 		}
 	}
+	public String getCurrentUserRoomUp(){
+		return getRoomUp(getCurrentUserRoom());
+	}
+	public String getCurrentUserRoomRight(){
+		return getRoomRight(getCurrentUserRoom());
+	}
+	public String getCurrentUserRoomDown(){
+		return getRoomDown(getCurrentUserRoom());
+	}
+	public String getCurrentUserRoomLeft(){
+		return getRoomLeft(getCurrentUserRoom());
+	}
 	
-	public boolean moveUp(){
-		String up = getRoomUp(getCurrentUserLocation());
+	public boolean moveCurrentUserUp(){
+		String up = getRoomUp(getCurrentUserRoom());
 		if(up == null){
 			return false;
 		}else{
 			return db.setUserLocation(getCurrentUserId(), up) > 0 ? true : false;
 		}
 	}
-	public boolean moveDown(){
-		String down = getRoomDown(getCurrentUserLocation());
+	public boolean moveCurrentUserDown(){
+		String down = getRoomDown(getCurrentUserRoom());
 		if(down == null){
 			return false;
 		}else{
 			return db.setUserLocation(getCurrentUserId(), down) > 0 ? true : false;
 		}
 	}
-	public boolean moveRight(){
-		String right = getRoomRight(getCurrentUserLocation());
+	public boolean moveCurrentUserRight(){
+		String right = getRoomRight(getCurrentUserRoom());
 		if(right == null){
 			return false;
 		}else{
 			return db.setUserLocation(getCurrentUserId(), right) > 0 ? true : false;
 		}
 	}
-	public boolean moveLeft(){
-		String left = getRoomLeft(getCurrentUserLocation());
+	public boolean moveCurrentUserLeft(){
+		String left = getRoomLeft(getCurrentUserRoom());
 		if(left == null){
 			return false;
 		}else{
@@ -164,12 +179,12 @@ public class GameController {
 		}
 	}
 	
-	public void pickUpItem(String itemId){
+	public void pickUpItemCurrentUser(String itemId){
 		db.setItemUser(itemId, getCurrentUserId());
 	}
 	
-	public void putDownItem(String itemId){
-		db.setItemRoom(itemId, getCurrentUserLocation());
+	public void putDownItemCurrentUser(String itemId){
+		db.setItemRoom(itemId, getCurrentUserRoom());
 	}
 	
 	public void close(){

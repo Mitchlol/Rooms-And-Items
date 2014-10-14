@@ -44,16 +44,16 @@ public class MainActivity extends Activity implements ControllerListener{
 	protected void updateDisplay(){
 		mDisplayFragment.setUser(mGameController.getCurrentUserName());
 		mDisplayFragment.setInventory(""+mGameController.getCurrentUserItemCount());
-		mDisplayFragment.setRoom(mGameController.getCurrentRoomName() + " " + mGameController.getRoomLocation(mGameController.getCurrentUserLocation()));
+		mDisplayFragment.setRoom(mGameController.getCurrentUserRoomName() + " " + mGameController.getUserCurrentLocationPoint());
 		mDisplayFragment.setItems(""+mGameController.getCurrentRoomItemCount());
 	}
 	
 	protected void updateController(){
 		mControllerFragment.setDirectionButtons(
-				mGameController.getRoomUp(mGameController.getCurrentUserLocation()) != null, 
-				mGameController.getRoomRight(mGameController.getCurrentUserLocation()) != null, 
-				mGameController.getRoomDown(mGameController.getCurrentUserLocation()) != null, 
-				mGameController.getRoomLeft(mGameController.getCurrentUserLocation()) != null);
+				mGameController.getCurrentUserRoomUp() != null, 
+				mGameController.getCurrentUserRoomRight() != null, 
+				mGameController.getCurrentUserRoomDown() != null, 
+				mGameController.getCurrentUserRoomLeft() != null);
 		mControllerFragment.setItemButtons(
 				mGameController.getCurrentRoomItemCount() > 0,
 				mGameController.getCurrentUserItemCount() > 0);
@@ -92,22 +92,22 @@ public class MainActivity extends Activity implements ControllerListener{
 
 	@Override
 	public void onMoveLeft() {
-		mGameController.moveLeft();
+		mGameController.moveCurrentUserLeft();
 		updateUI();
 	}
 	@Override
 	public void onMoveRight() {
-		mGameController.moveRight();
+		mGameController.moveCurrentUserRight();
 		updateUI();
 	}
 	@Override
 	public void onMoveUp() {
-		mGameController.moveUp();
+		mGameController.moveCurrentUserUp();
 		updateUI();
 	}
 	@Override
 	public void onMoveDown() {
-		mGameController.moveDown();
+		mGameController.moveCurrentUserDown();
 		updateUI();
 	}
 	@Override
@@ -118,7 +118,7 @@ public class MainActivity extends Activity implements ControllerListener{
 		.setCursor(cursor, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
 		    	cursor.moveToPosition(item);
-		        mGameController.pickUpItem(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
+		        mGameController.pickUpItemCurrentUser(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
 		        cursor.close();
 		        updateUI();
 		    }
@@ -141,7 +141,7 @@ public class MainActivity extends Activity implements ControllerListener{
 		.setCursor(cursor, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
 		    	cursor.moveToPosition(item);
-		        mGameController.putDownItem(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
+		        mGameController.putDownItemCurrentUser(cursor.getString(cursor.getColumnIndex(Schema.Tables.Items._ID)));
 		        cursor.close();
 		        updateUI();
 		    }
