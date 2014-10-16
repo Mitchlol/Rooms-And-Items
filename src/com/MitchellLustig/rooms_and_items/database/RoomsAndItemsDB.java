@@ -101,7 +101,7 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 				db.insert(Schema.Tables.ITEMS, null, Item);
 			}
 		}
-		Cursor roomsCursor = getRooms();
+		Cursor roomsCursor = getRooms(db);
 		roomsCursor.moveToFirst();
 		String firstRoomId = roomsCursor.getString(roomsCursor.getColumnIndex(Schema.Tables.Rooms._ID));
 		roomsCursor.close();
@@ -126,7 +126,11 @@ public class RoomsAndItemsDB extends SQLiteOpenHelper {
 	}
 	
 	public Cursor getRooms(){
-		return getReadableDatabase().query(Schema.Tables.ROOMS, //table
+		return getRooms(getReadableDatabase());	
+	}
+	
+	public Cursor getRooms(SQLiteDatabase db){
+		return db.query(Schema.Tables.ROOMS, //table
 			null,//columns, blank for all
 			null, //selections 
 			null, //selection Args
